@@ -1,7 +1,7 @@
 # Manjaro-I3-settings
  记录在使用Manjaro i3过程中所遇到的问题以及解决方法。
 
-## 1.科学上网
+## 1 科学上网
 如果不会科学上网，请立刻打消使用Linux的想法，就像MACOS一样，没有科学上网Homebrew也非常难用，好在有水果公司维护一个强大的appstore，让一般用户也能很好的使用。
 
 但是Linux，尤其是Manjaro这种不想ubuntu这种有商业公司维护的Linux系统，没有科学上网，你就失去了开源社区的支持，Linux的使用也就毫无意义。
@@ -14,11 +14,11 @@
 ```
 这个是带图形界面的版本，基本和windows上一样，在选择proxy的时候更方便一些。配置的过程主要分为以下几步：
 
-1. 填入订阅连接
+### 1.1 填入订阅连接
 ![clash1](img/clash/clash1.png)
 填入订阅连接之后，会在～/.config/clash目录下生成对应的config文件以及Country文件，这个时候很大可能在proxies这个选项卡里面不会刷新出来对应的代理。
 
-2. copy文件到～/.config/clash/profiles文件夹
+### 1.2 copy文件到～/.config/clash/profiles文件夹
 
 需要将windows内的代理文件copy到clash的配置文件夹内的profiles文件夹内。
 
@@ -26,7 +26,7 @@
 ![clash2](img/clash/clash2.png)
 
 
-## 2.基础配置
+## 2 基础配置
 I3作为一个平铺式的桌面管理软件，本质上和windows以及macos那些分屏工具是一样的，更多的是一些manjaro本身的一些配置，例如terminal的设置，字体设置、透明度设置等等，这些设置虽然复杂但是有了科学上网之后，基本都可以跟着视频教程完成。
 
 我的配置列表：
@@ -36,13 +36,13 @@ I3作为一个平铺式的桌面管理软件，本质上和windows以及macos那
 
 i3安装之后，i3本身的配置文件地址是在 ～/.i3/config文件内，其他安装的软件都是在～/.config/package-name 内进行的。
 
-## 3.输入法
+## 3 输入法
 中文输入法使用的是fcitx5,使用的默认的输入法，起码能用，能够解决绝大部分场景，可能没有联想功能。
 这个比较简单，需要注意的是需要设置环境变量。
 安装完成后，同样设置开机启动，并且添加输入法。
 ![pinyin](img/fcitx5/pinyin.png)
 
-## 4.快捷键
+## 4 快捷键
 比较常用的快捷键有
 
     - 打开终端 $mod+Enter
@@ -54,7 +54,7 @@ i3安装之后，i3本身的配置文件地址是在 ～/.i3/config文件内，�
 这些快捷键都可以在～/.i3/config里面进行设置。
 
 
-## 5.蓝牙
+## 5 蓝牙
 蓝牙是非常重要的一个事情，因为我目前用的主机是一个小型机器，SER6PRO，自带蓝牙和无线网模块，因此我想的是我的键盘和鼠标都可以自动无线连接。
 
 ```bash 
@@ -100,8 +100,12 @@ sudo pacman -S blueman
 启动blueman-manager可以对蓝牙进行可视化的管理，并且设置开机启动。
 ![blueman](img/bluetooth/bluetooth.png)
 
+会发现在~/.i3/config文件内其实已经已经有了注释掉的一句话
+```sh 
+exec --no-startup-id blueman-applet
+```
 
-## 6.打印机
+## 6 打印机
 manjaro本身自带了一个打印设备管理，使用网页进行配置的，但是对于同一个局域网的打印机我的找不到，使用了以下命令安装依赖
 ```bash
 sudo pacman -S cups print-manager cups-pdf system-config-printer 
@@ -118,13 +122,13 @@ sudo pacman -S cups print-manager cups-pdf system-config-printer
 ![prtinters](img/printer/printer3.png)
 
 
-## 7.硬盘挂载
+## 7 硬盘挂载
 我使用的SER6PRO是有一个pcie4.0的固态硬盘以及一个SATA3.0的固态硬盘，我的系统装载第一个硬盘里面，我需要挂载第二块硬盘。
 
-### 1.首先对第二块硬盘分区
+### 7.1 首先对第二块硬盘分区
 
 Linux下面有一个好用的磁盘管理软件就是GParted,这个也是i3自带的应用，具有图形界面。
-![Gparted](img/Gparted/gparted.png)
+![Gparted](img/GParted/gparted.png)
 
 特别简单的就可以进行分区的操作，我是将第二块磁盘建立了两个主分区，格式为ext4， 分别挂载到/public/data /public/video两个位置，主要用于数据存储。挂载的命令是：
 ```bash 
@@ -132,7 +136,7 @@ sudo mount /dev/sda1 /public/data
 sudo mount /dev/sda2 /public/video
 ```
 
-### 2.保存挂载点，并开机启动
+### 7.2 保存挂载点，并开机启动
 
 这里的话就需要查到两块分区的UUID,需要使用以下命令
 ```bash 
@@ -158,7 +162,7 @@ UUID=4dd81af8-464d-471a-8b92-4d383e1c4dfa /public/video  ext4    defaults,noatim
 
 这样就可以了，重启之后硬盘也在。
 
-### 3. 顺便U盘的挂载
+### 7.3 顺便U盘的挂载
 
 首先U盘的格式需要是FAT32,也就是WINDOWs下面的格式,查看U盘位置可以有两种方法，一种就是上面的Gparted工具，另外一种就是使用命令行：
 ```bash 
@@ -172,16 +176,16 @@ sudo mount /dev/sdb1 /mnt/usb
 ```
 挂载成功之后就可以进行文件操作了。
 
-## 8.中文字体
+## 8 中文字体
 
 
-## 9.deb安装
+## 9 deb安装
 
 
-## 10.坚果云和百度云
+## 10 坚果云和百度云
 
 
-## 11.截图工具Flameshot
+## 11 截图工具Flameshot
 截图软件使用Flameshot，这个截图软件十分好用，基本和微信的截图功能一样的，完全可以替代。直接通过pacman进行安装：
 
 ```sh
@@ -197,21 +201,17 @@ ok,剩下的可以自由使用了，同样可以设置快捷键进行。
 ![flameshot](img/flameshot/flameshot.png)
 
 
-## 11.WPS
+## 12 WPS
 
-## 12.LunarVim
+## 13 微信和腾讯会议
 
-## 13.Python
-
-## 14.Vulkan
-
-## 15.cmake
-
-## 16.微信和腾讯会议
-
-## 17.音乐软件
+## 14 音乐软件
 
 
+## 15 LunarVim
 
+## 16 cmake
 
+## 17 Vulkan
 
+## 18 Python
