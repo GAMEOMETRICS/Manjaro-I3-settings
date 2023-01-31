@@ -1,15 +1,14 @@
 # Manjaro-I3-settings
  记录在使用Manjaro i3过程中所遇到的问题以及解决方法。
 
-##1.科学上网
+## 1.科学上网
 如果不会科学上网，请立刻大小使用Linux的想法，就像MACOS一样，没有科学上网Homebrew也非常难用，好在有水果公司维护一个强大的appstore,让一般用户也能很好的使用。但是Linux,尤其是Manjaro这种不想ubuntu这种有商业公司维护的Linux系统，没有科学上网，你就失去了开源社区的支持，Linux的使用也就毫无意义。
 
 使用的是Clash-for-windows进行科学上网，首先在windows上一直在使用Clash，并且有购买订阅。
 
 
 ```bash
-    yay -S clash-for-windows-bin 
-    
+    yay -S clash-for-windows-bin  
 ```
 这个是带图形界面的版本，基本和windows上一样，在选择proxy的时候更方便一些。配置的过程主要分为以下几步：
 
@@ -18,13 +17,14 @@
 填入订阅连接之后，会在～/.config/clash目录下生成对应的config文件以及Country文件，这个时候很大可能在proxies这个选项卡里面不会刷新出来对应的代理。
 
 2. copy文件到～/.config/clash/profiles文件夹
+
 需要将windows内的代理文件copy到clash的配置文件夹内的profiles文件夹内。
 
 最终的结果：
 ![clash2](img/clash/clash2.png)
 
 
-##2.基础配置
+## 2.基础配置
 I3作为一个平铺式的桌面管理软件，本质上和windows以及macos那些分屏工具是一样的，更多的是一些manjaro本身的一些配置，例如terminal的设置，字体设置、透明度设置等等，这些设置虽然复杂但是有了科学上网之后，基本都可以跟着视频教程完成。
 
 我的配置列表：
@@ -34,13 +34,13 @@ I3作为一个平铺式的桌面管理软件，本质上和windows以及macos那
 
 i3安装之后，i3本身的配置文件地址是在 ～/.i3/config文件内，其他安装的软件都是在～/.config/<package-name>内进行的。
 
-##3.输入法
+## 3.输入法
 中文输入法使用的是fcitx5,使用的默认的输入法，起码能用，能够解决绝大部分场景，可能没有联想功能。
 这个比较简单，需要注意的是需要设置环境变量。
 安装完成后，同样设置开机启动，并且添加输入法。
 ![pinyin](img/fcitx5/pinyin.png)
 
-##4.快捷键
+## 4.快捷键
 比较常用的快捷键有
 
     - 打开终端 $mod+Enter
@@ -52,7 +52,7 @@ i3安装之后，i3本身的配置文件地址是在 ～/.i3/config文件内，�
 这些快捷键都可以在～/.i3/config里面进行设置。
 
 
-##5.蓝牙
+## 5.蓝牙
 蓝牙是非常重要的一个事情，因为我目前用的主机是一个小型机器，SER6PRO,自带蓝牙和无线网模块，因此我想的是我的键盘和鼠标都可以自动无线连接。
 
 ```bash 
@@ -90,7 +90,7 @@ connect **:**:** # 连接
 如果没有连接，只需要打开终端输入bca就可以连接上了，同样连接鼠标也有类似的命令，以防止启动的时候没连接上，另外还是建议使用2.4G连接或者有限的键盘以防万一，这个命令需要设备同时也在请求连接的状态。
 
 
-##6.打印机
+## 6.打印机
 manjaro本身自带了一个打印设备管理，使用网页进行配置的，但是对于同一个局域网的打印机我的找不到，使用了以下命令安装依赖
 ```bash
 sudo pacman -S cups print-manager cups-pdf system-config-printer 
@@ -109,9 +109,10 @@ sudo pacman -S cups print-manager cups-pdf system-config-printer
 ![prtinters](img/printer/printer3.png)
 
 
-##7.硬盘挂载
+## 7.硬盘挂载
 我使用的SER6PRO是有一个pice4.0的固态硬盘以及一个SATA3.0的固态硬盘，我的系统装载第一个硬盘里面，我需要挂载第二块硬盘。
 1.首先对第二块硬盘分区
+
 Linux下面有一个好用的磁盘管理软件就是GParted,这个也是i3自带的应用，具有图形界面。
 ![Gparted](img/Gparted/gparted.png)
 
@@ -120,10 +121,10 @@ Linux下面有一个好用的磁盘管理软件就是GParted,这个也是i3自�
 
     sudo mount /dev/sda1 /public/data
     sudo mount /dev/sda2 /public/video
-
 ```
 
 2.保存挂载点，并开机启动
+
 这里的话就需要查到两块分区的UUID,需要使用以下命令
 ```bash 
     blkid | grep /dev/sda #这个就是硬盘的盘符
@@ -149,6 +150,7 @@ UUID=4dd81af8-464d-471a-8b92-4d383e1c4dfa /public/video  ext4    defaults,noatim
 这样就可以了，重启之后硬盘也在。
 
 3. 顺便U盘的挂载
+
 首先U盘的格式需要是FAT32,也就是WINDOWs下面的格式,查看U盘位置可以有两种方法，一种就是上面的Gparted工具，另外一种就是使用命令行：
 ```bash 
     sudo fdisk -l 
