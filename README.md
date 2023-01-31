@@ -188,8 +188,8 @@ sudo mount /dev/sdb1 /mnt/usb
 
 虽然WINDOWS的字体可能都是具有版权的，我们只是自己使用。
 
-    - i 将windows下面的$C:\Window\Fonts$内的字体copy到U盘内，有300m左右，然后COPY到MANJARO，如果不知道如果COPY，请参7.3的u盘挂载。
-    -ii 将U盘内的字体copy到/usr/share/fonts/winfonts内 
+i 将windows下面的$C:\Window\Fonts$内的字体copy到U盘内，有300m左右，然后COPY到MANJARO，如果不知道如果COPY，请参7.3的u盘挂载。
+ii 将U盘内的字体copy到/usr/share/fonts/winfonts内 
 ```bash
 sudo mkdir /usr/share/fonts/winfonts ## fonts文件夹内可以看到很多之前已经装过的字体
 sudo cp [fonts_path/*]  /usr/share/fonts/winfonts #copy 
@@ -198,10 +198,10 @@ sudo mkfontscale
 sudo mkfontdir
 fc-cache -fv #建立索引并更新缓存
 ```
-    -iii 验证，通过wps进行查看，因为没有办法截到列表，就简单写了几行字。
-    ![wps fonts](img/fonts/font.png)
-    还有更尴尬的是原来好看的terminal字体变了
-    ![wps fonts](img/fonts/font2.png)
+iii 验证，通过wps进行查看，因为没有办法截到列表，就简单写了几行字。
+![wps fonts](img/fonts/font.png)
+还有更尴尬的是原来好看的terminal字体变了。
+![wps fonts](img/fonts/font2.png)
 
 ### 8.2 设置系统默认字体
 这里我没有按照上面的方案alias字体的名字的方案进行设置，我只是对alacritty的字体修改成了Consolas（Console里面的中文显示的是宋体）。也可以改成Lucida Console,这个时候中文字体是黑体。
