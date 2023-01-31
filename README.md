@@ -211,12 +211,18 @@ iii 验证，通过wps进行查看，因为没有办法截到列表，就简单�
 
 
 ## 9 deb安装
+整体安装的过程就是这样简单，后面有很多deb的包都可以用了。
+
+```bash 
+yay -S debtap #安装debtap 
+
+debtap -q demo.deb #使用debtap将deb进行转换为demo-1-x86_64.pkg.tar.xz
+
+sudo pacman -U demo-1-x86_64.pkg.tar.xz #使用pacman进行安装 
+```
 
 
-## 10 坚果云和百度云
-
-
-## 11 截图工具Flameshot
+## 10 截图工具Flameshot
 截图软件使用Flameshot，这个截图软件十分好用，基本和微信的截图功能一样的，完全可以替代。直接通过pacman进行安装：
 
 ```sh
@@ -231,17 +237,17 @@ bindsym $mod+Shift+A exec flameshot gui #使用快捷键进行截图
 ok,剩下的可以自由使用了，同样可以设置快捷键进行。
 ![flameshot](img/flameshot/flameshot.png)
 
+## 11 常用软件
+    
+    * WPS  
+    * 微信
+    * 腾讯会议
+    * 网易云
+    * 坚果云
+    * 百度云
 
-## 12 WPS
+## 12 常用编程工具
 
-## 13 微信和腾讯会议
-
-## 14 音乐软件
-
-## 15 LunarVim
-
-## 16 cmake
-
-## 17 Vulkan
-
-## 18 Python
+    * LunarVim 
+    * cmake 
+    * vulkan
