@@ -180,6 +180,32 @@ sudo mount /dev/sdb1 /mnt/usb
 挂载成功之后就可以进行文件操作了。
 
 ## 8 中文字体
+中文字体部分主要[参考这个](https://blog.csdn.net/sinat_33528967/article/details/93380729)
+
+如果是想快速的进行中文字体的显示，参考上面的连接的第二部分，主要安装的是思源的一些字体，这样显示的也就是思源的字体。这些字体在一般情况下还都没什么问题，但是在进行文字编辑的时候，尤其是在WPS里面就不太好用了。
+
+### 8.1 转移中文字体
+
+虽然WINDOWS的字体可能都是具有版权的，我们只是自己使用。
+
+    - i 将windows下面的$C:\Window\Fonts$内的字体copy到U盘内，有300m左右，然后COPY到MANJARO，如果不知道如果COPY，请参7.3的u盘挂载。
+    -ii 将U盘内的字体copy到/usr/share/fonts/winfonts内 
+```bash
+sudo mkdir /usr/share/fonts/winfonts ## fonts文件夹内可以看到很多之前已经装过的字体
+sudo cp [fonts_path/*]  /usr/share/fonts/winfonts #copy 
+cd /usr/share/fonts/winfonts 
+sudo mkfontscale
+sudo mkfontdir
+fc-cache -fv #建立索引并更新缓存
+```
+    -iii 验证，通过wps进行查看，因为没有办法截到列表，就简单写了几行字。
+    ![wps fonts](img/fonts/font.png)
+    还有更尴尬的是原来好看的terminal字体变了
+    ![wps fonts](img/fonts/font2.png)
+
+### 8.2 设置系统默认字体
+这里我没有按照上面的方案alias字体的名字的方案进行设置，我只是对alacritty的字体修改成了Consolas（Console里面的中文显示的是宋体）。也可以改成Lucida Console,这个时候中文字体是黑体。
+
 
 
 ## 9 deb安装
