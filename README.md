@@ -2,7 +2,9 @@
  记录在使用Manjaro i3过程中所遇到的问题以及解决方法。
 
 ## 1.科学上网
-如果不会科学上网，请立刻大小使用Linux的想法，就像MACOS一样，没有科学上网Homebrew也非常难用，好在有水果公司维护一个强大的appstore,让一般用户也能很好的使用。但是Linux,尤其是Manjaro这种不想ubuntu这种有商业公司维护的Linux系统，没有科学上网，你就失去了开源社区的支持，Linux的使用也就毫无意义。
+如果不会科学上网，请立刻打消使用Linux的想法，就像MACOS一样，没有科学上网Homebrew也非常难用，好在有水果公司维护一个强大的appstore，让一般用户也能很好的使用。
+
+但是Linux，尤其是Manjaro这种不想ubuntu这种有商业公司维护的Linux系统，没有科学上网，你就失去了开源社区的支持，Linux的使用也就毫无意义。
 
 使用的是Clash-for-windows进行科学上网，首先在windows上一直在使用Clash，并且有购买订阅。
 
@@ -32,7 +34,7 @@ I3作为一个平铺式的桌面管理软件，本质上和windows以及macos那
     * alacritty作为终端，如果想要实现透明，需要安装picom进行实现
     * fish, 主要是跟着视频学的
 
-i3安装之后，i3本身的配置文件地址是在 ～/.i3/config文件内，其他安装的软件都是在～/.config/<package-name>内进行的。
+i3安装之后，i3本身的配置文件地址是在 ～/.i3/config文件内，其他安装的软件都是在～/.config/package-name 内进行的。
 
 ## 3.输入法
 中文输入法使用的是fcitx5,使用的默认的输入法，起码能用，能够解决绝大部分场景，可能没有联想功能。
@@ -53,7 +55,7 @@ i3安装之后，i3本身的配置文件地址是在 ～/.i3/config文件内，�
 
 
 ## 5.蓝牙
-蓝牙是非常重要的一个事情，因为我目前用的主机是一个小型机器，SER6PRO,自带蓝牙和无线网模块，因此我想的是我的键盘和鼠标都可以自动无线连接。
+蓝牙是非常重要的一个事情，因为我目前用的主机是一个小型机器，SER6PRO，自带蓝牙和无线网模块，因此我想的是我的键盘和鼠标都可以自动无线连接。
 
 ```bash 
 sudo pacman -S bluez bluez-utils pulseaudio-bluetooth pavucontrol pulseaudio-alsa pulseaudio-bluetooth-a2dp-gdm-fix
@@ -61,6 +63,9 @@ sudo pacman -S bluez bluez-utils pulseaudio-bluetooth pavucontrol pulseaudio-als
 安装之后需要使用进行连接
 
 ```bash
+sudo systemctl enable bluetooth.service
+sudo systemctl start bluetooth.service #启动蓝牙服务
+
 bluetoothctl #进入蓝牙模型
 scan on #扫描列表，得到蓝牙的MAC地址
 
@@ -74,28 +79,32 @@ connect **:**:** # 连接
 
 
 ```lua 
-    exec bluetoothctl connect **:**:**:** --注意一定是配对过的设备
-
+exec bluetoothctl connect **:**:**:** --注意一定是配对过的设备
 ```
 对于非一直连接设备例如蓝牙耳机，不知道是哪里没有设置好*-*，目前的解决方案是将connect命令alias为一个简单命令，例如我的耳机的命令是：
 
 
 ```bash 
-    alias bca "bluetoothctl connect **:**:**:**:**" #bluetooth connect airset
-    funcsave bca
+alias bca "bluetoothctl connect **:**:**:**:**" #bluetooth connect airset
+funcsave bca
     
-    alias bcm "bluetoothctl connect **:**" #连接鼠标
-
+alias bcm "bluetoothctl connect **:**" #连接鼠标
+funcsave bcm
 ```
-如果没有连接，只需要打开终端输入bca就可以连接上了，同样连接鼠标也有类似的命令，以防止启动的时候没连接上，另外还是建议使用2.4G连接或者有限的键盘以防万一，这个命令需要设备同时也在请求连接的状态。
+如果没有连接，只需要打开终端输入bca就可以连接上了，同样连接鼠标也有类似的命令，以防止启动的时候没连接上，另外还是建议使用2.4G连接或者有线的键盘以防万一，这个命令需要设备同时也在请求连接的状态，就目前而言我都是输入命令连接，键盘使用2.4G连接。
+
+后面我又发现了一个新的包blueman,是一个UI连接的界面。
+```bash
+sudo pacman -S blueman
+```
+启动blueman-manager可以对蓝牙进行可视化的管理，并且设置开机启动。
+![blueman](img/bluetooth/bluetooth.png)
 
 
 ## 6.打印机
 manjaro本身自带了一个打印设备管理，使用网页进行配置的，但是对于同一个局域网的打印机我的找不到，使用了以下命令安装依赖
 ```bash
 sudo pacman -S cups print-manager cups-pdf system-config-printer 
-
-
 ```
 主要是使用的cups进行的打印机配置服务，然后可以使用system-config-printer进行UI设置，例如下图
 
@@ -110,24 +119,24 @@ sudo pacman -S cups print-manager cups-pdf system-config-printer
 
 
 ## 7.硬盘挂载
-我使用的SER6PRO是有一个pice4.0的固态硬盘以及一个SATA3.0的固态硬盘，我的系统装载第一个硬盘里面，我需要挂载第二块硬盘。
-1.首先对第二块硬盘分区
+我使用的SER6PRO是有一个pcie4.0的固态硬盘以及一个SATA3.0的固态硬盘，我的系统装载第一个硬盘里面，我需要挂载第二块硬盘。
+
+### 1.首先对第二块硬盘分区
 
 Linux下面有一个好用的磁盘管理软件就是GParted,这个也是i3自带的应用，具有图形界面。
 ![Gparted](img/Gparted/gparted.png)
 
 特别简单的就可以进行分区的操作，我是将第二块磁盘建立了两个主分区，格式为ext4， 分别挂载到/public/data /public/video两个位置，主要用于数据存储。挂载的命令是：
 ```bash 
-
-    sudo mount /dev/sda1 /public/data
-    sudo mount /dev/sda2 /public/video
+sudo mount /dev/sda1 /public/data
+sudo mount /dev/sda2 /public/video
 ```
 
-2.保存挂载点，并开机启动
+### 2.保存挂载点，并开机启动
 
 这里的话就需要查到两块分区的UUID,需要使用以下命令
 ```bash 
-    blkid | grep /dev/sda #这个就是硬盘的盘符
+blkid | grep /dev/sda #这个就是硬盘的盘符
 ```
 
 就会看到之前的两个硬盘的UUID
@@ -145,64 +154,62 @@ tmpfs                                     /tmp           tmpfs   defaults,noatim
 UUID=c06e3ewe-e0da-4df5-bd3a-8e68c6690222 /public/data   ext4    defaults,noatime 0 2 
 UUID=4dd81af8-464d-471a-8b92-4d383e1c4dfa /public/video  ext4    defaults,noatime 0 2
 ```
-注意上面的UUID是没有引号的，分别是挂载点， 文件系统类型，DUMP不需要管，PASS是硬盘自检顺序，自己硬盘的/的顺序第二个数字一定要是1,只接受0,1,2,其他盘都设置为2就可以了。
+注意上面的UUID是没有引号的，分别是挂载点， 文件系统类型，DUMP不需要管，PASS是硬盘自检顺序，启动硬盘的优先级是最高的，也就是第二个数字一定要是1,第二个数字只接受0,1,2,其他盘都设置为2就可以了，第一个数字写0。
 
 这样就可以了，重启之后硬盘也在。
 
-3. 顺便U盘的挂载
+### 3. 顺便U盘的挂载
 
 首先U盘的格式需要是FAT32,也就是WINDOWs下面的格式,查看U盘位置可以有两种方法，一种就是上面的Gparted工具，另外一种就是使用命令行：
 ```bash 
-    sudo fdisk -l 
+sudo fdisk -l 
 ```
 找到U盘的盘符，例如/dev/sdb1
 这时候需要挂载U盘，i3下会有一个默认文件夹叫做 /mnt/usb
 把U盘进行挂载
 ```bash 
-    sudo mount /dev/sdb1 /mnt/usb
+sudo mount /dev/sdb1 /mnt/usb
 ```
 挂载成功之后就可以进行文件操作了。
 
-##8.中文字体
+## 8.中文字体
 
 
-##9.deb安装
+## 9.deb安装
 
 
-##10.坚果云和百度云
+## 10.坚果云和百度云
 
 
-##11.截图工具Flameshot
+## 11.截图工具Flameshot
 截图软件使用Flameshot，这个截图软件十分好用，基本和微信的截图功能一样的，完全可以替代。直接通过pacman进行安装：
 
 ```sh
-    sudo pacman -S flameshot
-
+sudo pacman -S flameshot
 ```
 安装之后可以设置开机启动以及绑定截图快捷键,在～/.i3/config文件中加入以下代码：
 
 ```sh
-    exec flameshot -b # 这个就是开机启动 background运行
-    bindsym $mod+Shift+A exec flameshot gui #使用快捷键进行截图
-
+exec flameshot -b # 这个就是开机启动 background运行
+bindsym $mod+Shift+A exec flameshot gui #使用快捷键进行截图
 ```
 ok,剩下的可以自由使用了，同样可以设置快捷键进行。
 ![flameshot](img/flameshot/flameshot.png)
 
 
-##11.WPS
+## 11.WPS
 
-##12.LunarVim
+## 12.LunarVim
 
-##13.Python
+## 13.Python
 
-##14.Vulkan
+## 14.Vulkan
 
-##15.cmake
+## 15.cmake
 
-##16.微信和腾讯会议
+## 16.微信和腾讯会议
 
-##17.音乐软件
+## 17.音乐软件
 
 
 
