@@ -51,6 +51,7 @@ i3安装之后，i3本身的配置文件地址是在 ～/.i3/config文件内，�
     - 让一个应用floating $mod+Shift+Space
     - 可以调整一个窗口的大小 $mod+r 然后可以使用 h j k ;进行调整大小 
     - dmenu $mod+d
+
 这些快捷键都可以在～/.i3/config里面进行设置。
 
 
@@ -204,10 +205,18 @@ iii 验证，通过wps进行查看，因为没有办法截到列表，就简单�
 ![wps fonts](img/fonts/font2.png)
 
 ### 8.2 设置系统默认字体
-这里我没有按照上面的方案alias字体的名字的方案进行设置，我只是对alacritty的字体修改成了Consolas（Console里面的中文显示的是宋体）。也可以改成Lucida Console,这个时候中文字体是黑体,字体间距总感觉比正常宽一些，所以我最终搞了一个折衷的方法，bold和Bold Italic使用Lucida Console，正常的字体就使用Console，这样就有了两种字体。
+这里我没有按照上面的方案alias字体的名字的方案进行设置，因为我设置了之后没有效果，重启了几次都没用，我只是对alacritty的字体修改成了Consolas（Console里面的中文显示的是宋体）。也可以改成Lucida Console,这个时候中文字体是黑体,字体间距总感觉比正常宽一些，所以我最终搞了一个折衷的方法，bold和Bold Italic使用Lucida Console，正常的字体就使用Console，这样就有了两种字体。
 
 最终的效果如下图
 ![font3](img/fonts/font3.png)
+
+### 8.3 再次更新设置系统默认字体
+这一次是参考的这个[博客](http://panqiincs.me/2019/06/05/after-installing-manjaro/)。
+
+安装字体之后，直接copy下面的xml进行设置，然后把alacritty的字体全部改成Consolas。
+
+最终的效果:
+![默认字体](img/fonts/font4.png)
 
 
 ## 9 deb安装
