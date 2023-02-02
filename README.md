@@ -31,11 +31,11 @@ I3作为一个平铺式的桌面管理软件，本质上和windows以及macos那
 
 我的配置列表，嗯，没有配置列表，别人说什么好用就用什么，新手的任务就是抄抄抄就够了，不配有意见。
     
-    * alacritty作为终端，如果想要实现透明，需要安装picom进行实现
-    * fish 挺好用的
-    * feh+variety 嗯 其实没啥用
+    * alacritty 作为终端，如果想要实现透明，需要安装picom进行实现
+    * fish shell 挺好用的
+    * feh+variety 壁纸软件 其实没啥用
     * ranger 好像是自带的，操作起来确实比用手点快的多
-    *
+    * conky 桌面上显示cpu占用的软件 开机启动，可能会有乱码，可以在/usr/share/conkey/conkey_maia进行修改已经安装的字体
 
 i3安装之后，i3本身的配置文件地址是在 ～/.i3/config文件内，其他安装的软件都是在～/.config/package-name 内进行的。
 
